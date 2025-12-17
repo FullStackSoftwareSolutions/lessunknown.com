@@ -1,201 +1,877 @@
-<!DOCTYPE html>
-<html class="no-js" lang="en">
-
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Infobusiness Corporation</title>
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-	<link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
-    <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
+<meta charset="utf-8">
+<title>INFOBUSINESS CORPORATION</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --fg:#ffffff;
+  --muted:rgba(255,255,255,0.75);
+  --overlayTop:rgba(0,0,0,0.58);
+  --overlayBottom:rgba(0,0,0,0.86);
+  --yellow:#ffd400;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; margin:0; }
+
+body{
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:var(--fg);
+  background:#000;
+  overflow-x:hidden;
+}
+
+/* Background layer */
+#bg{
+  position:fixed;
+  inset:0;
+  z-index:-3;
+  overflow:hidden;
+}
+#bgImg{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform-origin:center;
+  will-change:transform;
+  transform:scale(1);
+}
+
+#overlay{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background:
+    radial-gradient(900px 520px at 20% 35%, rgba(27,108,255,.12), transparent 62%),
+    radial-gradient(820px 520px at 85% 65%, rgba(27,108,255,.10), transparent 62%),
+    linear-gradient(to bottom, var(--overlayTop), var(--overlayBottom));
+  pointer-events:none;
+}
+
+/* Landing */
+header{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  padding:48px 32px;
+  cursor:pointer;
+}
+
+.container{ max-width:900px; }
+
+h1{
+  font-size:clamp(28px,3.6vw,48px);
+  margin:0 0 14px;
+  font-weight:760;
+  line-height:1.15;
+}
+
+.subtitle{
+  font-size:13px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:22px;
+}
+
+.blurb{
+  font-size:clamp(15px,1.6vw,18px);
+  line-height:1.6;
+  max-width:62ch;
+  margin-bottom:22px;
+  color:rgba(255,255,255,0.90);
+}
+
+.yellow{ color:var(--yellow); }
+
+.scroll{
+  font-size:12px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.60);
+}
+
+.identity{
+  margin-top:26px;
+  font-size:13px;
+  letter-spacing:0.10em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.78);
+  line-height:1.8;
+}
+
+.identity .line2{
+  color:rgba(255,255,255,0.70);
+}
+
+.identity a{
+  color:rgba(255,255,255,0.78);
+  text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,0.25);
+  padding-bottom:2px;
+}
+.identity a:hover{
+  color:rgba(255,255,255,0.95);
+  border-bottom-color:rgba(255,255,255,0.55);
+}
+
+/* Conversation */
+main{
+  padding:84px 32px 140px;
+}
+
+/* Sticky selector */
+.selector{
+  position:sticky;
+  top:0;
+  z-index:10;
+  padding:16px 0 14px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.78), rgba(0,0,0,0.40));
+  border-bottom:1px solid rgba(255,255,255,0.10);
+}
+
+.selector-inner{
+  display:flex;
+  gap:18px;
+  align-items:flex-end;
+  flex-wrap:wrap;
+  max-width:900px;
+}
+
+.selector button{
+  background:none;
+  border:none;
+  padding:0;
+  color:var(--muted);
+  font-size:13px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  cursor:pointer;
+}
+
+.selector button.active{
+  color:#fff;
+  border-bottom:1px solid #fff;
+  padding-bottom:6px;
+}
+
+/* Sections */
+.section{
+  max-width:900px;
+  line-height:1.7;
+  display:none;
+  color:rgba(255,255,255,0.88);
+  padding-top:22px;
+}
+.section.active{ display:block; }
+
+.q{
+  position:relative;
+  padding:18px 18px;
+  border-radius:10px;
+}
+
+.q-title{
+  position:relative;
+  z-index:2;
+  font-weight:650;
+  margin:0 0 6px;
+  color:rgba(255,255,255,0.95);
+}
+
+/* Answer layout (avatar + text) */
+.answer{
+  position:relative;
+  z-index:2;
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+}
+.avatar{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  object-fit:cover;
+  flex:0 0 28px;
+  display:none;
+  border:1px solid rgba(255,255,255,0.18);
+  filter:grayscale(100%);
+}
+body.left-landing .avatar{ display:block; }
+
+.answer-text{
+  flex:1 1 auto;
+}
+
+/* Hover highlight inside answer text */
+.hl{ color:var(--yellow); }
+
+/* Grey to dark gradient mat under text on hover */
+.q::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:10px;
+  background: linear-gradient(135deg, rgba(90,90,90,0.92), rgba(30,30,30,0.94));
+  opacity:0;
+  transform:translateY(2px);
+  transition:opacity 160ms ease, transform 160ms ease;
+  z-index:1;
+  pointer-events:none;
+}
+
+.q:hover::before,
+.q:focus-within::before{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.q:hover .answer-text,
+.q:focus-within .answer-text{
+  color:rgba(255,255,255,0.96);
+}
+
+hr{
+  border:none;
+  border-top:1px solid rgba(255,255,255,0.15);
+  margin:18px 0;
+}
+
+/* Bottom-right catch phrases */
+#sig{
+  position:fixed;
+  bottom:24px;
+  right:28px;
+  text-align:right;
+  font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:14px;
+  text-shadow:0 0 18px rgba(0,0,0,0.75);
+  z-index:12;
+}
+#sig .line{
+  min-height:20px;
+  white-space:nowrap;
+  color:rgba(255,255,255,0.90);
+}
+#sig .line + .line{ margin-top:6px; color:rgba(255,255,255,0.78); }
+#sig.yellow .line{ color:var(--yellow); }
+#sig.yellow .line + .line{ color:rgba(255,212,0,0.82); }
+
+/* Right-side phrase spray (conversation mode only) */
+#spray{
+  position:fixed;
+  top:0;
+  right:0;
+  width:38vw;
+  max-width:520px;
+  height:100vh;
+  pointer-events:none;
+  z-index:11;
+  display:none;
+  overflow:hidden;
+}
+body.left-landing #spray{ display:block; }
+
+.spray-item{
+  position:absolute;
+  right:0;
+  max-width:95%;
+  text-align:right;
+  font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:12px;
+  letter-spacing:0.04em;
+  color:rgba(255,255,255,0.22);
+  text-shadow:0 0 18px rgba(0,0,0,0.80);
+  opacity:0;
+  transform:translateY(6px);
+  transition:opacity 800ms ease, transform 800ms ease, color 400ms ease;
+  white-space:nowrap;
+}
+.spray-item.on{
+  opacity:1;
+  transform:translateY(0);
+}
+.spray-item.yellow{
+  color:rgba(255,212,0,0.85);
+}
+
+/* Return button (top middle) */
+#returnBtn{
+  position:fixed;
+  top:16px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:13;
+  background:rgba(0,0,0,0.45);
+  color:rgba(255,255,255,0.85);
+  border:1px solid rgba(255,255,255,0.18);
+  border-radius:10px;
+  padding:10px 12px;
+  font-size:12px;
+  letter-spacing:0.10em;
+  text-transform:uppercase;
+  cursor:pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display:none;
+}
+body.left-landing #returnBtn{ display:block; }
+
+/* Leave landing: hide it completely */
+body.left-landing header{ display:none; }
+
+/* Mobile */
+@media (max-width:700px){
+  header{ padding:40px 22px; }
+  main{ padding:78px 22px 140px; }
+  #sig{ right:18px; bottom:18px; font-size:13px; }
+  #spray{ width:45vw; }
+}
+</style>
 </head>
 
 <body>
-    <div id="mobile-menu-open" class="shadow-large">
-        <i class="fa fa-bars" aria-hidden="true"></i>
-    </div>
-    <!-- End #mobile-menu-toggle -->
-    <header>
-        <div id="mobile-menu-close">
-            <span>Close</span> <i class="fa fa-times" aria-hidden="true"></i>
-        </div>
-        <ul id="menu" class="shadow">
-            <li>
-                <a href="#about">About</a>
-            </li>
-            <li>
-                <a href="#contact">Contact</a>
-            </li>
-        </ul>
-    </header>
-    <!-- End header -->
 
-    <div id="lead">
-        <div id="lead-content">
-            <h1>Infobusiness Corporation</h1>
-            <p>2003-2019</p>
-            <h2>Communications Technology & DCIM Software Contractor</h2>
-        </div>
-        <!-- End #lead-content -->
+<div id="bg" aria-hidden="true">
+  <img id="bgImg" src="bogdan.png" alt="">
+</div>
+<div id="overlay" aria-hidden="true"></div>
 
-        <div id="lead-overlay"></div>
+<div id="spray" aria-hidden="true"></div>
 
-        <div id="lead-down">
-            <span>
-                <i class="fa fa-chevron-down" aria-hidden="true"></i>
-            </span>
-        </div>
-        <!-- End #lead-down -->
-    </div>
-    <!-- End #lead -->
+<button id="returnBtn" type="button" aria-label="Return to landing">Return</button>
 
-    <div id="about" class="about">
-        <h2 class="heading">Administration & Audit of Communications Technology</h2>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 about-image image-1">
-                </div>
-                <div class="col-md-8">
-                  <ul>
-                    <li>Review vendor safety documents and health policies for compliance with client’s requirements</li>
-                    <li>Manage vendor adherence to client’s regulation and protocol</li>
-                    <li>Interface with stakeholders to support projects with DCIM, physical layer or connectivity components</li>
-                    <li>Negotiate downtime with business to permit alterations to LAN/SAN/WAN equipment and minimize impact to daily operations</li>
-                    <li>Provide statistics and forecasts to support capacity planning and server infrastructure expansion</li>
-                    <li>Review existing procedures for optimization of business continuity and disaster recovery while synchronizing deliverables with owners of network, storage or server appliances</li>
-                    <li>Provide technical and design support, quality monitoring, invoicing and cost control guidance</li>
-                    <li>Assess performance of vendors and suppliers against established client standards and procedures</li>
-                    <li>Assist with forecasting and resource allocation based on client’s project schedules and criticality</li>
-                    <li>Produce vendor support requirements, provide direction on SLAs, standards and expectations</li>
-                    <li>Conduct ongoing reviews and design concurrence of to ensure compliance with client’s quality expectations</li>
-                    <li>Negotiate contracts with vendors for new construction or tendered projects, clarify unit rate fee structures</li>
-                    <li>Conduct periodic material and labor cost audits to verify vendor efficiency and ensure best value results</li>
-                    <li>Implement and maintain restoration services contract</li>
-                    <li>Prepare project budget estimates at project initiation stage</li>
-                    <li>Recommend integration of updated business workflows, research and assess new technology, confirm workability within the current infrastructure</li>
-                    <li>Administer performance warranty programs and track vendor certification results</li>
-                    <li>Develop and maintain distributor, supplier and vendor relationships as required to support client’s facilities</li>
-                  </ul>
-                </div>
-            </div>
-        </div>
+<header id="landing" aria-label="Landing screen" title="Click to continue">
+  <div class="container">
+    <h1>Physical Layer and Connectivity Governance</h1>
+    <div class="subtitle">Independent ICT Consulting since 10BASE-T</div>
+
+    <div class="blurb">
+      <span class="yellow">I help enterprises</span> design, retrofit, and control ICT infrastructure using disciplined consulting and purpose-built software.
     </div>
 
-    <div class="about background-alt">
-        <h2 class="heading">DCIM & Proprietary Databases</h2>
-        <div class="container">
-            <div class="row">
-              <div class="col-md-4 about-image image-2">
-              </div>
-                <div class="col-md-8">
-                  <ul>
-                    <li>Establish processes to link the drafting/documentation of connectivity systems with the baseline DCIM databases</li>
-                    <li>Compile written specifications to detail procedures pertaining to changes in data centres and telecommunications rooms, workflows to standardize installation all converged IP data/voice services and the IoT</li>
-                    <li>Link CAD drawings to SQL database to visually present the cable plant detail on floor layouts complete with architectural, furniture and equipment references</li>
-                    <li>Develop image databases to documents project roll-out</li>
-                    <li>Program SQL changes to reflect the clients’ business workflow</li>
-                    <li>Provide CAD drafting to maintain the optical fibre, copper infrastructures and derivative technology </li>
-                    <li>Ensure design consistency and compliance with client’s written standards </li>
-                    <li>Identify design concerns and present alternative options during ad-hoc interaction with business; conduct “constructability” review of completed designs</li>
-                    <li>Address "on-the-fly" design issues that result from unconventional site-conditions or untimely connectivity requests received from adjacent trades</li>
-                    <li>Document layouts of all hub room, entrance facilities and all telecommunications room including, floor detail, cabinet and equipment positioning, cable delivery pathways, telecommunications backboard elevations</li>
-                    <li>Document and maintain detailed elevations of all communications racks and cabinets and backboards</li>
-                    <li>Coordinate daily the transfer of information from eTRACS over to the CAD masterset; deliver masterset CAD in user friendly prints</li>
-                    <li>Maintain the CAD drawings related optical fibre infrastructure, complete with locations of manholes, media grade and strand counts, for both inside and outside plant; maintain drawings and records of all optical fibre entrance cabinets and main fibre distribution frames</li>
-                    <li>Manage the SNMP monitoring software and compile service alerts and permits digital visibility into all installed SNMP-capable electric devices including UPSs, coolers or metered power bars</li>
-                    <li>Design and draft physical layer requirements to support adjacent IP communications systems, including in-building wireless, RF data and wireless access points data transmissions, video conference and presentation solutions</li>
-                    <li>Design and review telecommunications grounding solutions; coordinate pathway design with electrical team</li>
-                  </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="scroll">Scroll or click for a conversation.</div>
 
-    <div class="about">
-        <h2 class="heading">Business Solutions & Vendor Management</h2>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 about-image image-3">
-                </div>
-                <div class="col-md-8">
-                  <ul>
-                    <li>Manage receipt and verification of closing documentation including image uploads, DCIM uploads, information intended for CAD changes, correct component labeling, test data, connectivity schedules, database entries</li>
-                    <li>Own the design of telecommunications infrastructure portions of projects with a physical layer component</li>
-                    <li>Issue specifications, CAD layout and elevation drawings, DCIM scope of work documents, work schedules, product summaries and connectivity plans</li>
-                    <li>Analyze and interpret customer requests for additions and alternations to the corporate cabling plant</li>
-                    <li>Perform detailed SQL database / query surveys to accommodate client’s requirements for each applicable project</li>
-                    <li>Define tasks through concept development, scope definition, estimating, budget preparation</li>
-                    <li>Attend stakeholder meetings on an as needed basis to support the project goals and timelines</li>
-                    <li>Coordinate the troubleshooting, root cause identification and problem resolution related to existing DCIM software and infrastructure systems</li>
-                    <li>Prepare project budget estimates at project initiation stage; initiate change control requests for work planned, prepare check sheets for work execution and close out</li>
-                    <li>Prioritize and track the delivery of projects and issue summary reports for review by management</li>
-                    <li>Evaluate pricing for change orders and submit for processing</li>
-                    <li>Review and approve time sheets, labor and material summaries</li>
-                    <li>Conduct final inspections and communicate deficiency lists for review and close out</li>
-                    <li>Conduct reviews of as-built floor plans, test result databases to verify accuracy and completeness</li>
-                    <li>Review and monitor vendor’s time sheets, labor and material summaries across the projects</li>
-                    <li>Draft changes to equipment and services in each telecommunications room with each work order</li>
-                    <li>Document purchase orders, progress draws, call requests, expenses, invoices and other cost control items</li>
-                  </ul>
-                </div>
-            </div>
-        </div>
+    <div class="identity">
+      <div class="line1">Bogdan Mihailescu MBA, RCDD, PMP</div>
+      <div class="line2">INFOBUSINESS CORPORATION 2003-<span id="year"></span> 🇨🇦</div>
+      <div class="line2"><a href="mailto:support@lessunknown.com">support@lessunknown.com</a></div>
     </div>
-    <!-- End #about -->
+  </div>
+</header>
 
-    <div id="contact">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4 col-xs-12 image-bogdan">
-          </div>
-          <div class="col-md-8 col-xs-12">
-            <h2>Get in Touch with Bogdan</h2>
-            <div id="contact-form">
-              <form method="POST" action="https://formspree.io/etracs@gmail.com">
-                  <input type="hidden" name="_subject" value="Contact request from Infobusiness Corporation" />
-                  <input type="email" name="_replyto" placeholder="Your email" required>
-                  <textarea name="message" placeholder="Your message" required></textarea>
-                  <button type="submit">Send</button>
-              </form>
-            </div>
-          </div>
-        </div>
+<main id="conversation" aria-label="Conversation">
+  <div class="selector" aria-label="Conversation selector">
+    <div class="selector-inner">
+      <button class="active" data-target="gov">Governance Competencies</button>
+      <button data-target="tech">Technical Programs</button>
+      <button data-target="del">Frequent Deliverables</button>
+    </div>
+  </div>
+
+  <section id="gov" class="section active">
+    <div class="q">
+      <div class="q-title">Can he operate independently at a governance level?</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">Yes. He operates as an independent consultant providing physical layer and connectivity governance for smart buildings and data centre environments. His role is to apply standards, define constraints and acceptance criteria so infrastructure is designed correctly, remains maintainable, and retains long-term value. He is not present during installation and does not manage labor. His authority sits at design intent, governance, and quality verification level.</div>
       </div>
-        <!-- End #contact-form -->
     </div>
-    <!-- End #contact -->
+    <hr>
 
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-5 copyright">
-                    <p>
-                        Copyright &copy; 2019 Infobusiness Corporation
-                    </p>
-                </div>
-                <div class="col-sm-2 top">
-                    <span id="to-top">
-                        <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <div class="col-sm-5 social">
-                    <ul>
-                        <li>
-                            <a href="https://www.linkedin.com/in/bogdan-mihailescu-19597113/" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- End footer -->
+    <div class="q">
+      <div class="q-title">Does he think in systems rather than tasks?</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">He approaches connectivity as a system, not a collection of tickets. Copper, fiber, pathways, rooms, racks, patching, labeling, testing, and documentation are treated as a single interdependent environment. His work ensures that Ethernet, PoE, CCTV, intercoms, clocks, BAS, A/V systems, and industrial instruments function as one coherent whole rather than as disconnected installations.</div>
+      </div>
+    </div>
+    <hr>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="js/scripts.min.js"></script>
+    <div class="q">
+      <div class="q-title">Is he shaping outcomes or reacting to problems?</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">He shapes outcomes before execution begins. His strategy brings design, implementation governance, and documentation together into a repeatable framework that prevents drift. By defining constraints and acceptance criteria upfront, he reduces ambiguity during execution and avoids reactive correction after the fact. When unexpected conditions arise, designs are adapted while continuity and standards alignment are preserved.</div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="q">
+      <div class="q-title">How does he fit alongside project managers and contractors?</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">He operates as a consultant, not a project manager or foreman. He does not direct crews or manage day-to-day site activity. Instead, he designs solutions that are standards-compliant, buildable, and maintainable, coordinates expectations with contractors and stakeholders, and verifies quality at closeout against design intent, testing results, and documentation. His role complements project management without replacing it.</div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="q">
+      <div class="q-title">How does he reduce long-term risk?</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">He reduces long-term risk by enforcing standards, alignment, and documentation discipline. His work assumes Ethernet ubiquity, multi-trade overlap, rapid technology change, and documentation decay. By maintaining a durable record of what was actually built and verified, he protects organizations from operational risk, future outages, and loss of institutional knowledge due to turnover.</div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="q">
+      <div class="q-title">Does he understand how organizations actually operate?</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">Yes. His consulting practice reflects real organizational constraints: competing stakeholders, budget pressure, trade sequencing, and business continuity requirements. He negotiates downtime, aligns scope across disciplines, and issues deliverables that define outcomes without dictating methods, preserving contractor autonomy while keeping execution aligned with organizational realities.</div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="q">
+      <div class="q-title">Is he credible to engineers and contractors?</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">He brings lifelong familiarity with data centres and telecommunications distribution facilities. He works fluently with industry standards such as ANSI/TIA and BICSI, and with tools including AutoCAD, MSSM, Linkware, AEM, and NetAlly certification platforms. This technical fluency allows him to identify issues early, translate requirements clearly, and maintain credibility across engineering and contracting teams.</div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="q">
+      <div class="q-title">What does he leave behind when the work is done?</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">He leaves behind clarity. And if that is not possible in a retrofit project, then transparency. Typical deliverables include standards and constraints, drawings and markups, acceptance criteria, labeling conventions, test review requirements, closeout checklists, verification notes, and reconciled documentation. The objective is not volume but a record that future technicians can trust and safely work from years later.</div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="q">
+      <div class="q-title">What experience demonstrates that this approach works?</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">His experience includes multi-campus connectivity retrofits supported by proprietary DCIM platforms, physical layer governance during large data centre builds, fiber reroute and transition designs, Security Operations Centre cabling programs, Axis CCTV and IP security integrations, KVM rationalization initiatives, and vendor compliance and infrastructure auditing. Across these projects, the common outcome is durable infrastructure and documented continuity.</div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="q">
+      <div class="q-title">Why does he involve himself in DCIM and software architecture?</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">Because documentation only has value if it remains accurate over time. He contributes to DCIM and financial software architecture by capturing requirements, designing process frameworks, and guiding development teams so systems reflect how engineering, procurement, and operations actually function. His role bridges stakeholder intent with practical execution rather than programming.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tech" class="section">
+    <div class="q">
+      <div class="q-title">Multi-Campus Connectivity Retrofit</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">Developed and deployed a proprietary DCIM and connectivity management platform (eTRACS) to support structured cabling upgrades across more than a hundred telecom rooms. The system linked CAD documentation with SQL databases, giving contractors a clear, consistent framework from design through invoicing.</div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="q">
+      <div class="q-title">Data Centre Constructions</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">Guided the physical layer and connectivity scope during the build of 2 large data centres. Ensured backbone cabling, distribution systems, and testing were aligned with IT and facilities requirements. Coordinated with consultants, contractors, and stakeholders to integrate connectivity into overall project delivery.</div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="q">
+      <div class="q-title">Fiber Reroute and Transition Design</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">Directed the rerouting of legacy single-mode fiber through existing underground pathways into a new utility structure. Designed the transition from armored OSP cabling to inside-plant tight-buffer terminations with LC connectors, while preparing contingency plans for MPO trunk replacement.</div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="q">
+      <div class="q-title">Security Operations Centre Cabling Design</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">Produced structured cabling designs for a new Security Operations Centre (SOC), including copper distribution, optical fiber pathways, CCTV integration, intercoms, and wireless access point connectivity. Applied ANSI/TIA and BICSI standards and prepared alternate design options for optical fiber risers.</div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="q">
+      <div class="q-title">Axis CCTV and IP Security Integration</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">Worked with Axis Communications equipment and security contractors to integrate IP-based CCTV cameras, intercoms, and video telephones into the structured cabling infrastructure. Designed Power over Ethernet delivery and ensured long-term maintainability of the security layer.</div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="q">
+      <div class="q-title">KVM Infrastructure Rationalization</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">Reassessed a proposed high-cost KVM solution by analyzing existing interconnections and operational history. Delivered a leaner, standards-compliant design that aligned with technical requirements while reducing overall costs.</div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="q">
+      <div class="q-title">CCTV and PoE Delivery Clarification</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">Provided design clarification to security contractors on proper use of mid-span PoE injectors for surveillance equipment. Ensured that system documentation matched structured cabling best practices and prevented design errors.</div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="q">
+      <div class="q-title">Vendor Oversight and Infrastructure Auditing</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">Managed vendor compliance with safety, health, and technical standards. Conducted audits of labor, material costs, and documentation deliverables to ensure quality and best-value results.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="del" class="section">
+    <div class="q">
+      <div class="q-title">Administration and Audit of Communications Technology</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">Reviews vendor safety documents and health policies for compliance, manages adherence to client regulation and protocol, interfaces with stakeholders to support DCIM and physical layer programs, negotiates downtime to minimize operational impact, supports capacity planning, reviews continuity and disaster recovery procedures, provides technical guidance for quality and cost control, clarifies standards and expectations, and conducts periodic labor and material audits to ensure best value.</div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="q">
+      <div class="q-title">DCIM and Proprietary Databases</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">Establishes processes linking drawings and documentation to baseline DCIM databases, compiles specifications for data centre and telecom room changes, links CAD to SQL records for a durable visual record, maintains copper and fiber CAD mastersets, resolves field-driven design changes, documents hub rooms and telecommunications rooms including elevations and pathways, maintains outside plant records, supports SNMP visibility for infrastructure devices, and coordinates grounding and pathway requirements across disciplines.</div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="q">
+      <div class="q-title">Business Solutions and Vendor Management</div>
+      <div class="answer">
+        <img class="avatar" src="bogdan.png" alt="">
+        <div class="answer-text">Manages receipt and verification of closing documentation, owns telecom design portions of projects, issues specifications and drawings, analyzes additions and alterations to the corporate cabling plant, performs SQL surveys, defines scope and estimating, attends stakeholder meetings, coordinates troubleshooting across software and infrastructure, initiates change control and closeout check sheets, tracks delivery and issues summary reporting, evaluates change order pricing, conducts final inspections and deficiency lists, verifies as-built plans and test results, and documents purchase orders, progress draws, expenses, and invoices for cost control and accountability.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="sig" aria-label="Key statements">
+  <div class="line" id="sig1"></div>
+  <div class="line" id="sig2"></div>
+</div>
+
+<script>
+(function(){
+  // Current year
+  const yearEl = document.getElementById("year");
+  yearEl.textContent = String(new Date().getFullYear());
+
+  const bgImg = document.getElementById("bgImg");
+  const conversation = document.getElementById("conversation");
+  const returnBtn = document.getElementById("returnBtn");
+  const spray = document.getElementById("spray");
+  const sig = document.getElementById("sig");
+
+  // Preload images
+  ["bogdan.png","switch.png"].forEach(src => { const i = new Image(); i.src = src; });
+
+  // Sticky selector toggle
+  document.querySelectorAll(".selector button").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      document.querySelectorAll(".selector button").forEach(b=>b.classList.remove("active"));
+      document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById(btn.dataset.target).classList.add("active");
+    });
+  });
+
+  // On hover: make a couple words yellow in the answer text
+  const blocks = document.querySelectorAll(".q");
+
+  function wrapRandomWords(el, count){
+    const text = el.textContent;
+    const words = text.split(/\s+/).filter(Boolean);
+    if(words.length < 8) return;
+
+    const picks = new Set();
+    const maxAttempts = 80;
+    let attempts = 0;
+
+    while(picks.size < count && attempts < maxAttempts){
+      const i = Math.floor(Math.random() * words.length);
+      if(words[i].length < 4) { attempts++; continue; }
+      picks.add(i);
+      attempts++;
+    }
+
+    const html = words.map((w, i)=>{
+      const safe = w.replace(/</g,"&lt;").replace(/>/g,"&gt;");
+      return picks.has(i) ? `<span class="hl">${safe}</span>` : safe;
+    }).join(" ");
+
+    el.dataset.raw = text;
+    el.innerHTML = html;
+  }
+
+  function restoreRaw(el){
+    if(el.dataset.raw){
+      el.textContent = el.dataset.raw;
+    }
+  }
+
+  blocks.forEach(b=>{
+    const t = b.querySelector(".answer-text");
+    if(!t) return;
+    b.addEventListener("mouseenter", ()=>{
+      restoreRaw(t);
+      wrapRandomWords(t, 2);
+    });
+    b.addEventListener("mouseleave", ()=>{
+      restoreRaw(t);
+    });
+  });
+
+  // Catch phrases pool (20), no repeat until exhausted, then reshuffle
+  const catchPhrasesBase = [
+    "Comfortable in chaos.",
+    "Effective with structure.",
+    "Governance without handholding.",
+    "Calm under constraint.",
+    "Standards first, always.",
+    "Retrofit reality fluent.",
+    "Design intent protected.",
+    "Documentation that survives turnover.",
+    "Clear constraints, clean outcomes.",
+    "Low ego, high accountability.",
+    "Independent, not isolated.",
+    "Buildable, maintainable, verifiable.",
+    "Consistency across campuses.",
+    "Friction removed, not ignored.",
+    "Quality verified, not assumed.",
+    "Outcomes over theatre.",
+    "Repeatable methods, durable results.",
+    "Practical governance, not noise.",
+    "Aligned across trades.",
+    "Tenacious until closeout."
+  ];
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      const t=a[i]; a[i]=a[j]; a[j]=t;
+    }
+    return a;
+  }
+
+  let bag = shuffle(catchPhrasesBase);
+  let idx = 0;
+
+  function nextPhrase(){
+    if(idx >= bag.length){
+      bag = shuffle(catchPhrasesBase);
+      idx = 0;
+    }
+    const p = bag[idx];
+    idx += 1;
+    return p;
+  }
+
+  // Bottom-right: cycle phrases (no 1s/0s)
+  const sig1 = document.getElementById("sig1");
+  const sig2 = document.getElementById("sig2");
+
+  let yellowOn = false;
+  setInterval(()=>{
+    yellowOn = !yellowOn;
+    sig.classList.toggle("yellow", yellowOn);
+  }, 10000);
+
+  async function wait(ms){ return new Promise(r=>setTimeout(r, ms)); }
+
+  async function phraseLoop(){
+    while(true){
+      sig1.textContent = nextPhrase();
+      sig2.textContent = nextPhrase();
+      await wait(5000);
+    }
+  }
+  phraseLoop();
+
+  // Right-side phrase spray (conversation mode only)
+  const sprayCount = 10;
+  const sprayItems = [];
+
+  function randomBetween(min, max){
+    return min + Math.random() * (max - min);
+  }
+
+  function placeSprayItem(el){
+    const top = randomBetween(60, window.innerHeight - 80);
+    const rightPad = randomBetween(10, 26);
+    el.style.top = top.toFixed(0) + "px";
+    el.style.right = rightPad.toFixed(0) + "px";
+  }
+
+  function initSpray(){
+    spray.innerHTML = "";
+    sprayItems.length = 0;
+    for(let i=0;i<sprayCount;i++){
+      const d = document.createElement("div");
+      d.className = "spray-item";
+      d.textContent = nextPhrase();
+      placeSprayItem(d);
+      spray.appendChild(d);
+      sprayItems.push(d);
+      setTimeout(()=> d.classList.add("on"), 80 + i * 120);
+    }
+  }
+
+  let sprayTimer = null;
+  let sprayYellowTimer = null;
+
+  function startSpray(){
+    initSpray();
+
+    if(sprayTimer) clearInterval(sprayTimer);
+    sprayTimer = setInterval(()=>{
+      if(!document.body.classList.contains("left-landing")) return;
+
+      const pick = sprayItems[Math.floor(Math.random() * sprayItems.length)];
+      pick.classList.remove("on");
+      pick.classList.remove("yellow");
+      setTimeout(()=>{
+        pick.textContent = nextPhrase();
+        placeSprayItem(pick);
+        pick.classList.add("on");
+      }, 350);
+    }, 1400);
+
+    if(sprayYellowTimer) clearInterval(sprayYellowTimer);
+    sprayYellowTimer = setInterval(()=>{
+      if(!document.body.classList.contains("left-landing")) return;
+      const pick = sprayItems[Math.floor(Math.random() * sprayItems.length)];
+      pick.classList.add("yellow");
+      setTimeout(()=> pick.classList.remove("yellow"), 1800);
+    }, 10000);
+  }
+
+  function stopSpray(){
+    if(sprayTimer) clearInterval(sprayTimer);
+    if(sprayYellowTimer) clearInterval(sprayYellowTimer);
+    sprayTimer = null;
+    sprayYellowTimer = null;
+    spray.innerHTML = "";
+  }
+
+  window.addEventListener("resize", ()=>{
+    if(document.body.classList.contains("left-landing")){
+      startSpray();
+    }
+  });
+
+  // Zoom state machine: zoom in, pause 10s, zoom out, pause 10s
+  const minS = 1.0;
+  const maxS = 1.3;
+  const zoomMs = 9000;
+  const pauseMs = 10000;
+
+  let zoomEnabled = true;
+  let phase = "zoomIn";
+  let phaseStart = performance.now();
+
+  function setScale(s){
+    bgImg.style.transform = "scale(" + s.toFixed(4) + ")";
+  }
+
+  function tick(now){
+    if(!zoomEnabled){
+      setScale(1.0);
+      requestAnimationFrame(tick);
+      return;
+    }
+
+    const t = now - phaseStart;
+
+    if(phase === "zoomIn"){
+      const p = Math.min(1, t / zoomMs);
+      setScale(minS + (maxS - minS) * p);
+      if(p >= 1){ phase = "holdMax"; phaseStart = now; }
+    } else if(phase === "holdMax"){
+      setScale(maxS);
+      if(t >= pauseMs){ phase = "zoomOut"; phaseStart = now; }
+    } else if(phase === "zoomOut"){
+      const p = Math.min(1, t / zoomMs);
+      setScale(maxS - (maxS - minS) * p);
+      if(p >= 1){ phase = "holdMin"; phaseStart = now; }
+    } else if(phase === "holdMin"){
+      setScale(minS);
+      if(t >= pauseMs){ phase = "zoomIn"; phaseStart = now; }
+    }
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  // Leave landing on first scroll or click
+  let leftLanding = false;
+
+  function leaveLanding(){
+    if(leftLanding) return;
+    leftLanding = true;
+    document.body.classList.add("left-landing");
+
+    bgImg.src = "switch.png";
+    zoomEnabled = false;
+    setScale(1.0);
+
+    const convoTop = conversation.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: convoTop, behavior: "instant" });
+
+    startSpray();
+  }
+
+  window.addEventListener("scroll", ()=>{
+    if(leftLanding) return;
+    if(window.scrollY > 10){
+      leaveLanding();
+    }
+  }, { passive:true });
+
+  document.getElementById("landing").addEventListener("click", ()=>{
+    leaveLanding();
+  });
+
+  // Return to landing
+  returnBtn.addEventListener("click", ()=>{
+    leftLanding = false;
+    document.body.classList.remove("left-landing");
+
+    stopSpray();
+
+    bgImg.src = "bogdan.png";
+    zoomEnabled = true;
+    phase = "zoomIn";
+    phaseStart = performance.now();
+
+    window.scrollTo({ top: 0, behavior: "instant" });
+  });
+
+})();
+</script>
+
 </body>
-
 </html>
