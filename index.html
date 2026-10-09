@@ -3,874 +3,728 @@
 <head>
   <link rel="shortcut icon" href="/favicon.ico" />
 <meta charset="utf-8">
-<title>INFOBUSINESS CORPORATION</title>
+<title>INFOBUSINESS CORPORATION — Physical Layer &amp; Connectivity Governance for Pharmaceutical Campuses</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Independent ICT consulting for physical layer and connectivity governance across large, multi-campus pharmaceutical organizations. Bogdan Mihailescu, MBA, RCDD, PMP — 25 years, one industry.">
 
 <style>
 :root{
-  --fg:#ffffff;
-  --muted:rgba(255,255,255,0.75);
-  --overlayTop:rgba(0,0,0,0.58);
-  --overlayBottom:rgba(0,0,0,0.86);
-  --yellow:#ffd400;
+  --bg:#0a0e15;
+  --bg-alt:#10151f;
+  --card:#12181f;
+  --border:rgba(255,255,255,0.09);
+  --fg:#eef1f5;
+  --muted:#9aa6b5;
+  --muted-2:#c3cad4;
+  --accent:#e0b530;
+  --accent-dim:rgba(224,181,48,0.35);
+  --maxw:1120px;
 }
 
 *{ box-sizing:border-box; }
-html,body{ height:100%; margin:0; }
+html{ scroll-behavior:smooth; }
+html,body{ margin:0; }
 
 body{
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   color:var(--fg);
-  background:#000;
-  overflow-x:hidden;
+  background:var(--bg);
+  line-height:1.6;
 }
 
-/* Background layer */
-#bg{
-  position:fixed;
-  inset:0;
-  z-index:-3;
-  overflow:hidden;
+a{ color:inherit; }
+
+.wrap{
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding-left:32px;
+  padding-right:32px;
 }
-#bgImg{
+
+/* Nav */
+header.nav{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(10,14,21,0.88);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 0;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+  white-space:nowrap;
+}
+.brand-avatar{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  overflow:hidden;
+  flex:0 0 auto;
+  border:1px solid var(--border);
+}
+.brand-avatar img{
   width:100%;
   height:100%;
   object-fit:cover;
-  transform-origin:center;
-  will-change:transform;
-  transform:scale(1);
+  filter:grayscale(100%);
+  display:block;
 }
-
-#overlay{
-  position:fixed;
-  inset:0;
-  z-index:-2;
-  background:
-    radial-gradient(900px 520px at 20% 35%, rgba(27,108,255,.12), transparent 62%),
-    radial-gradient(820px 520px at 85% 65%, rgba(27,108,255,.10), transparent 62%),
-    linear-gradient(to bottom, var(--overlayTop), var(--overlayBottom));
-  pointer-events:none;
-}
-
-/* Landing */
-header{
-  min-height:100vh;
+.brand-text{
   display:flex;
-  align-items:center;
-  padding:48px 32px;
+  flex-direction:column;
+  line-height:1.35;
+}
+.brand-line1{
+  font-weight:750;
+  font-size:13px;
+  letter-spacing:0.07em;
+  color:var(--fg);
+}
+.brand-line2, .brand-line3{
+  font-size:10px;
+  letter-spacing:0.09em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+@keyframes facezoom{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.22); }
+}
+.brand-avatar img, .identity-avatar img{
+  animation:facezoom 12s ease-in-out infinite;
+}
+nav.links{
+  display:flex;
+  gap:28px;
+  flex-wrap:wrap;
+}
+nav.links a{
+  font-size:13px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--muted);
+  text-decoration:none;
+  transition:color 150ms ease;
+}
+nav.links a:hover{ color:var(--fg); }
+.nav-cta{
+  border:1px solid var(--border);
+  padding:8px 16px;
+  border-radius:6px;
+  font-size:13px;
+  color:var(--fg) !important;
+}
+.nav-cta:hover{ border-color:var(--accent-dim); }
+
+#navToggle{
+  display:none;
+  background:none;
+  border:1px solid var(--border);
+  color:var(--fg);
+  border-radius:6px;
+  padding:8px 10px;
+  font-size:16px;
   cursor:pointer;
 }
 
-.container{ max-width:900px; }
-
-h1{
-  font-size:clamp(28px,3.6vw,48px);
-  margin:0 0 14px;
-  font-weight:760;
-  line-height:1.15;
+/* Hero */
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:96px 0 84px;
+  border-bottom:1px solid var(--border);
 }
+.hero-bg{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+}
+.hero-bg img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 15%;
+  transform-origin:center;
+  animation:herozoom 20s ease-in-out infinite;
+}
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:
+    radial-gradient(900px 520px at 20% 30%, rgba(224,181,48,0.08), transparent 62%),
+    linear-gradient(to bottom, rgba(10,14,21,0.62), rgba(10,14,21,0.95));
+}
+.hero > .wrap{
+  position:relative;
+  z-index:2;
+}
+@keyframes herozoom{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.28); }
+}
+.eyebrow{
+  font-size:12px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:16px;
+  font-weight:600;
+}
+h1{
+  font-size:clamp(26px,3.4vw,40px);
+  line-height:1.22;
+  margin:0 0 20px;
+  font-weight:750;
+  max-width:24ch;
+}
+.lede{
+  font-size:clamp(16px,1.7vw,19px);
+  color:var(--muted-2);
+  max-width:62ch;
+  margin:0 0 32px;
+}
+.hero-actions{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-bottom:40px;
+}
+.btn{
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:6px;
+  font-size:14px;
+  letter-spacing:0.03em;
+  text-decoration:none;
+  font-weight:600;
+}
+.btn-primary{
+  background:var(--accent);
+  color:#161207;
+}
+.btn-primary:hover{ background:#eec550; }
+.btn-secondary{
+  border:1px solid var(--border);
+  color:var(--fg);
+}
+.btn-secondary:hover{ border-color:var(--accent-dim); }
 
-.subtitle{
-  font-size:13px;
-  letter-spacing:0.12em;
+.stat-strip{
+  display:flex;
+  gap:40px;
+  flex-wrap:wrap;
+  margin-bottom:36px;
+}
+.stat-num{
+  font-size:26px;
+  font-weight:750;
+  color:var(--fg);
+  line-height:1.1;
+}
+.stat-label{
+  font-size:12px;
+  letter-spacing:0.06em;
   text-transform:uppercase;
   color:var(--muted);
-  margin-bottom:22px;
-}
-
-.blurb{
-  font-size:clamp(15px,1.6vw,18px);
-  line-height:1.6;
-  max-width:62ch;
-  margin-bottom:22px;
-  color:rgba(255,255,255,0.90);
-}
-
-.yellow{ color:var(--yellow); }
-
-.scroll{
-  font-size:12px;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,0.60);
+  margin-top:4px;
 }
 
 .identity{
-  margin-top:26px;
-  font-size:13px;
-  letter-spacing:0.10em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,0.78);
-  line-height:1.8;
-}
-
-.identity .line2{
-  color:rgba(255,255,255,0.70);
-}
-
-.identity a{
-  color:rgba(255,255,255,0.78);
-  text-decoration:none;
-  border-bottom:1px solid rgba(255,255,255,0.25);
-  padding-bottom:2px;
-}
-.identity a:hover{
-  color:rgba(255,255,255,0.95);
-  border-bottom-color:rgba(255,255,255,0.55);
-}
-
-/* Conversation */
-main{
-  padding:84px 32px 140px;
-}
-
-/* Sticky selector */
-.selector{
-  position:sticky;
-  top:0;
-  z-index:10;
-  padding:16px 0 14px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  background: linear-gradient(to bottom, rgba(0,0,0,0.78), rgba(0,0,0,0.40));
-  border-bottom:1px solid rgba(255,255,255,0.10);
-}
-
-.selector-inner{
   display:flex;
-  gap:18px;
-  align-items:flex-end;
-  flex-wrap:wrap;
-  max-width:900px;
+  align-items:center;
+  gap:14px;
+  padding-top:28px;
+  border-top:1px solid var(--border);
+  max-width:640px;
 }
-
-.selector button{
-  background:none;
-  border:none;
-  padding:0;
-  color:var(--muted);
+.identity-avatar{
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  overflow:hidden;
+  flex:0 0 auto;
+  border:1px solid var(--border);
+}
+.identity-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:grayscale(100%);
+  display:block;
+}
+.identity .name{
+  font-size:14px;
+  font-weight:650;
+  color:var(--fg);
+}
+.identity .org{
   font-size:13px;
-  letter-spacing:0.12em;
-  text-transform:uppercase;
-  cursor:pointer;
-}
-
-.selector button.active{
-  color:#fff;
-  border-bottom:1px solid #fff;
-  padding-bottom:6px;
+  color:var(--muted);
+  margin-top:2px;
 }
 
 /* Sections */
-.section{
-  max-width:900px;
-  line-height:1.7;
-  display:none;
-  color:rgba(255,255,255,0.88);
-  padding-top:22px;
+section{
+  padding:76px 0;
+  border-bottom:1px solid var(--border);
 }
-.section.active{ display:block; }
+section.alt{ background:var(--bg-alt); }
 
-.q{
-  position:relative;
-  padding:18px 18px;
-  border-radius:10px;
+.section-head{
+  max-width:640px;
+  margin-bottom:44px;
 }
-
-.q-title{
-  position:relative;
-  z-index:2;
-  font-weight:650;
-  margin:0 0 6px;
-  color:rgba(255,255,255,0.95);
-}
-
-/* Answer layout (avatar + text) */
-.answer{
-  position:relative;
-  z-index:2;
-  display:flex;
-  gap:12px;
-  align-items:flex-start;
-}
-.avatar{
-  width:28px;
-  height:28px;
-  border-radius:50%;
-  object-fit:cover;
-  flex:0 0 28px;
-  display:none;
-  border:1px solid rgba(255,255,255,0.18);
-  filter:grayscale(100%);
-}
-body.left-landing .avatar{ display:block; }
-
-.answer-text{
-  flex:1 1 auto;
-}
-
-/* Hover highlight inside answer text */
-.hl{ color:var(--yellow); }
-
-/* Grey to dark gradient mat under text on hover */
-.q::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:10px;
-  background: linear-gradient(135deg, rgba(90,90,90,0.92), rgba(30,30,30,0.94));
-  opacity:0;
-  transform:translateY(2px);
-  transition:opacity 160ms ease, transform 160ms ease;
-  z-index:1;
-  pointer-events:none;
-}
-
-.q:hover::before,
-.q:focus-within::before{
-  opacity:1;
-  transform:translateY(0);
-}
-
-.q:hover .answer-text,
-.q:focus-within .answer-text{
-  color:rgba(255,255,255,0.96);
-}
-
-hr{
-  border:none;
-  border-top:1px solid rgba(255,255,255,0.15);
-  margin:18px 0;
-}
-
-/* Bottom-right catch phrases */
-#sig{
-  position:fixed;
-  bottom:24px;
-  right:28px;
-  text-align:right;
-  font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size:14px;
-  text-shadow:0 0 18px rgba(0,0,0,0.75);
-  z-index:12;
-}
-#sig .line{
-  min-height:20px;
-  white-space:nowrap;
-  color:rgba(255,255,255,0.90);
-}
-#sig .line + .line{ margin-top:6px; color:rgba(255,255,255,0.78); }
-#sig.yellow .line{ color:var(--yellow); }
-#sig.yellow .line + .line{ color:rgba(255,212,0,0.82); }
-
-/* Right-side phrase spray (conversation mode only) */
-#spray{
-  position:fixed;
-  top:0;
-  right:0;
-  width:38vw;
-  max-width:520px;
-  height:100vh;
-  pointer-events:none;
-  z-index:11;
-  display:none;
-  overflow:hidden;
-}
-body.left-landing #spray{ display:block; }
-
-.spray-item{
-  position:absolute;
-  right:0;
-  max-width:95%;
-  text-align:right;
-  font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+.section-label{
   font-size:12px;
-  letter-spacing:0.04em;
-  color:rgba(255,255,255,0.22);
-  text-shadow:0 0 18px rgba(0,0,0,0.80);
-  opacity:0;
-  transform:translateY(6px);
-  transition:opacity 800ms ease, transform 800ms ease, color 400ms ease;
-  white-space:nowrap;
-}
-.spray-item.on{
-  opacity:1;
-  transform:translateY(0);
-}
-.spray-item.yellow{
-  color:rgba(255,212,0,0.85);
-}
-
-/* Return button (top middle) */
-#returnBtn{
-  position:fixed;
-  top:16px;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:13;
-  background:rgba(0,0,0,0.45);
-  color:rgba(255,255,255,0.85);
-  border:1px solid rgba(255,255,255,0.18);
-  border-radius:10px;
-  padding:10px 12px;
-  font-size:12px;
-  letter-spacing:0.10em;
+  letter-spacing:0.14em;
   text-transform:uppercase;
-  cursor:pointer;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  display:none;
+  color:var(--accent);
+  font-weight:600;
+  margin-bottom:12px;
 }
-body.left-landing #returnBtn{ display:block; }
+h2{
+  font-size:clamp(24px,2.6vw,32px);
+  margin:0 0 10px;
+  font-weight:700;
+}
+.section-sub{
+  color:var(--muted);
+  font-size:15.5px;
+}
 
-/* Leave landing: hide it completely */
-body.left-landing header{ display:none; }
+/* About */
+.about-grid{
+  display:grid;
+  grid-template-columns:1.4fr 1fr;
+  gap:56px;
+  align-items:start;
+}
+.about-grid p{
+  color:var(--muted-2);
+  font-size:15.5px;
+  margin:0 0 18px;
+}
+.chip-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:8px;
+}
+.chip{
+  font-size:12.5px;
+  letter-spacing:0.03em;
+  padding:6px 12px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  color:var(--muted-2);
+  background:var(--card);
+}
+.about-side{
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+  background:var(--card);
+}
+.about-side img{
+  width:100%;
+  display:block;
+  filter:grayscale(35%);
+  opacity:0.92;
+}
+.about-side .cap{
+  padding:14px 16px;
+  font-size:12.5px;
+  color:var(--muted);
+  letter-spacing:0.04em;
+}
+.pull-quote{
+  margin:20px 0 0;
+  padding:18px 20px;
+  border-left:2px solid var(--accent);
+  background:var(--card);
+  border-radius:0 8px 8px 0;
+  font-size:14.5px;
+  font-style:italic;
+  color:var(--muted-2);
+}
 
-/* Mobile */
+/* Card grids */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
+  gap:20px;
+}
+.card{
+  border:1px solid var(--border);
+  background:var(--card);
+  border-radius:10px;
+  padding:24px;
+}
+.card h3{
+  font-size:16px;
+  margin:0 0 10px;
+  font-weight:650;
+}
+.card p{
+  font-size:14.5px;
+  color:var(--muted);
+  margin:0;
+}
+.card .num{
+  font-size:12px;
+  color:var(--accent);
+  letter-spacing:0.1em;
+  margin-bottom:10px;
+  font-weight:650;
+}
+
+/* Deliverables */
+.del-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+  gap:28px;
+}
+.del-card h3{
+  font-size:16px;
+  margin:0 0 14px;
+  font-weight:650;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--border);
+}
+.del-card ul{
+  margin:0;
+  padding:0 0 0 18px;
+  color:var(--muted-2);
+  font-size:14.5px;
+}
+.del-card li{ margin-bottom:9px; }
+
+/* Contact / footer */
+.contact-inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  flex-wrap:wrap;
+  gap:28px;
+}
+.contact-inner p{
+  color:var(--muted-2);
+  max-width:52ch;
+  margin:0;
+}
+footer{
+  padding:28px 0;
+}
+.footer-inner{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:10px;
+  font-size:12.5px;
+  color:var(--muted);
+}
+footer a{ color:var(--muted); text-decoration:none; border-bottom:1px solid var(--border); }
+footer a:hover{ color:var(--fg); }
+
+@media (max-width:820px){
+  .about-grid{ grid-template-columns:1fr; }
+}
+
 @media (max-width:700px){
-  header{ padding:40px 22px; }
-  main{ padding:78px 22px 140px; }
-  #sig{ right:18px; bottom:18px; font-size:13px; }
-  #spray{ width:45vw; }
+  .wrap{ padding-left:20px; padding-right:20px; }
+  nav.links{
+    display:none;
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--bg);
+    border-bottom:1px solid var(--border);
+    flex-direction:column;
+    gap:0;
+    padding:8px 20px 16px;
+  }
+  nav.links.open{ display:flex; }
+  nav.links a{ padding:12px 0; border-bottom:1px solid var(--border); }
+  .nav-cta{ margin-top:8px; display:inline-block; text-align:center; }
+  #navToggle{ display:inline-block; }
+  .hero{ padding:64px 0 56px; }
+  section{ padding:56px 0; }
+  .stat-strip{ gap:28px; margin-bottom:28px; }
 }
 </style>
 </head>
 
 <body>
 
-<div id="bg" aria-hidden="true">
-  <img id="bgImg" src="bogdan.png" alt="">
-</div>
-<div id="overlay" aria-hidden="true"></div>
-
-<div id="spray" aria-hidden="true"></div>
-
-<button id="returnBtn" type="button" aria-label="Return to landing">Return</button>
-
-<header id="landing" aria-label="Landing screen" title="Click to continue">
-  <div class="container">
-    <h1>Physical Layer and Connectivity Governance</h1>
-    <div class="subtitle">Independent ICT Consulting since 10BASE-T</div>
-
-    <div class="blurb">
-      <span class="yellow">I help enterprises</span> design, retrofit, and control ICT infrastructure using disciplined consulting and purpose-built software.
-    </div>
-
-    <div class="scroll">Scroll or click for a conversation.</div>
-
-    <div class="identity">
-      <div class="line1">Bogdan Mihailescu MBA, RCDD, PMP</div>
-      <div class="line2">INFOBUSINESS CORPORATION 2003-<span id="year"></span> 🇨🇦</div>
-      <div class="line2"><a href="mailto:support@lessunknown.com">support@lessunknown.com</a></div>
-    </div>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top">
+      <span class="brand-avatar"><img src="bogdan.png" alt=""></span>
+      <span class="brand-text">
+        <span class="brand-line1">INFOBUSINESS CORPORATION</span>
+        <span class="brand-line2">ICT Consulting</span>
+        <span class="brand-line3">Brampton, Ontario, Canada</span>
+      </span>
+    </a>
+    <nav class="links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#competencies">Competencies</a>
+      <a href="#programs">Programs</a>
+      <a href="#deliverables">Deliverables</a>
+      <a class="nav-cta" href="#contact">Contact</a>
+    </nav>
+    <button id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
   </div>
 </header>
 
-<main id="conversation" aria-label="Conversation">
-  <div class="selector" aria-label="Conversation selector">
-    <div class="selector-inner">
-      <button class="active" data-target="gov">Governance Competencies</button>
-      <button data-target="tech">Technical Programs</button>
-      <button data-target="del">Frequent Deliverables</button>
+<div id="top"></div>
+
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true"><img src="bogdan.png" alt=""></div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="eyebrow">Senior ICT Consultant</div>
+    <h1>ICT Governance Focused on Regulated Multi-Campus Structures Since Y2K</h1>
+    <p class="lede">Independent governance for physical layer and connectivity programs across large, multi-campus, multi-building enterprises. Design intent, standards, and acceptance criteria — set at the top, verified at closeout.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="mailto:support@lessunknown.com">Get in touch</a>
+      <a class="btn btn-secondary" href="#programs">View selected programs</a>
+    </div>
+    <div class="stat-strip">
+      <div class="stat"><div class="stat-num">25</div><div class="stat-label">Years in Practice</div></div>
+      <div class="stat"><div class="stat-num">Pharma</div><div class="stat-label">Sole Industry Focus</div></div>
+      <div class="stat"><div class="stat-num">100+</div><div class="stat-label">Telecom Rooms Governed</div></div>
+    </div>
+    <div class="identity">
+      <span class="identity-avatar"><img src="bogdan.png" alt="Bogdan Mihailescu"></span>
+      <div>
+        <div class="name">Bogdan Mihailescu, MBA, RCDD, PMP</div>
+        <div class="org">INFOBUSINESS CORPORATION · 2003–2026 · Canada</div>
+      </div>
     </div>
   </div>
+</section>
 
-  <section id="gov" class="section active">
-    <div class="q">
-      <div class="q-title">Can he operate independently at a governance level?</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">Yes. He operates as an independent consultant providing physical layer and connectivity governance for smart buildings and data centre environments. His role is to apply standards, define constraints and acceptance criteria so infrastructure is designed correctly, remains maintainable, and retains long-term value. He is not present during installation and does not manage labor. His authority sits at design intent, governance, and quality verification level.</div>
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label">About</div>
+      <h2>Governance, not labor</h2>
+      <p class="section-sub">Independent oversight for physical layer and connectivity programs across large pharmaceutical campuses, from design intent through closeout.</p>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>For twenty-five years, large pharmaceutical organizations — multi-campus, multi-building, multi-floor — have been essentially my only work. I operate as an independent consultant providing physical layer and connectivity governance for these environments. My role is to apply standards, define constraints, and set acceptance criteria so infrastructure is designed correctly, remains maintainable, and retains long-term value. I'm not present during installation and don't manage labor — my authority sits at design intent, governance, and quality verification.</p>
+        <p>I approach connectivity as a system, not a collection of tickets. Copper, fiber, pathways, rooms, racks, patching, labeling, testing, and documentation are treated as one interdependent environment, so Ethernet, PoE, CCTV, intercoms, clocks, BAS, A/V systems, and industrial instruments function as a coherent whole rather than disconnected installations.</p>
+        <div class="chip-list">
+          <span class="chip">ANSI/TIA</span>
+          <span class="chip">BICSI</span>
+          <span class="chip">AutoCAD</span>
+          <span class="chip">MSSM</span>
+          <span class="chip">Linkware</span>
+          <span class="chip">AEM</span>
+          <span class="chip">NetAlly</span>
+        </div>
+      </div>
+      <div>
+        <div class="about-side">
+          <img src="switch.png" alt="Structured cabling and switch infrastructure">
+          <div class="cap">Structured cabling and active infrastructure under governance.</div>
+        </div>
+        <blockquote class="pull-quote">"The tool I rely on most isn't software — it's disciplined multitasking: running concurrent workstreams across buildings and stakeholders without dropping a detail or introducing an error."</blockquote>
       </div>
     </div>
-    <hr>
+  </div>
+</section>
 
-    <div class="q">
-      <div class="q-title">Does he think in systems rather than tasks?</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">He approaches connectivity as a system, not a collection of tickets. Copper, fiber, pathways, rooms, racks, patching, labeling, testing, and documentation are treated as a single interdependent environment. His work ensures that Ethernet, PoE, CCTV, intercoms, clocks, BAS, A/V systems, and industrial instruments function as one coherent whole rather than as disconnected installations.</div>
+<section id="competencies" class="alt">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label">Governance Competencies</div>
+      <h2>How I operate</h2>
+      <p class="section-sub">Twenty-five years of retrofit and build experience across large pharmaceutical campuses, distilled into a repeatable governance framework.</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <h3>Independent Governance</h3>
+        <p>I set design intent, constraints, and acceptance criteria without directing crews or managing day-to-day site activity — complementing project management rather than replacing it.</p>
+      </div>
+      <div class="card">
+        <h3>Systems Thinking</h3>
+        <p>Connectivity is treated as one interdependent environment — cabling, pathways, testing, and documentation working together, not as disconnected installations.</p>
+      </div>
+      <div class="card">
+        <h3>Outcome-Driven Strategy</h3>
+        <p>Constraints and acceptance criteria are defined upfront to reduce ambiguity during execution and prevent reactive correction after the fact.</p>
+      </div>
+      <div class="card">
+        <h3>Coordination Without Overreach</h3>
+        <p>I coordinate expectations with contractors and stakeholders and verify quality at closeout against design intent, testing results, and documentation.</p>
+      </div>
+      <div class="card">
+        <h3>Long-Term Risk Reduction</h3>
+        <p>Standards, alignment, and documentation discipline protect organizations from operational risk, future outages, and loss of institutional knowledge due to turnover.</p>
+      </div>
+      <div class="card">
+        <h3>Organizational Fluency</h3>
+        <p>I work within real constraints — competing stakeholders, budget pressure, trade sequencing, and continuity requirements — while preserving contractor autonomy.</p>
+      </div>
+      <div class="card">
+        <h3>Technical Credibility</h3>
+        <p>Lifelong familiarity with data centres and telecom distribution facilities, working fluently with ANSI/TIA and BICSI standards and industry-standard tooling.</p>
+      </div>
+      <div class="card">
+        <h3>DCIM &amp; Software Architecture</h3>
+        <p>Documentation only holds value if it stays accurate. I contribute to DCIM and financial software architecture so systems reflect how operations actually function.</p>
+      </div>
+      <div class="card">
+        <h3>Disciplined Multitasking</h3>
+        <p>The skill I rely on most: running multiple buildings, stakeholders, and workstreams in parallel — not sequencing tasks, but holding all of them at once, without dropping a detail or introducing an error.</p>
       </div>
     </div>
-    <hr>
+  </div>
+</section>
 
-    <div class="q">
-      <div class="q-title">Is he shaping outcomes or reacting to problems?</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">He shapes outcomes before execution begins. His strategy brings design, implementation governance, and documentation together into a repeatable framework that prevents drift. By defining constraints and acceptance criteria upfront, he reduces ambiguity during execution and avoids reactive correction after the fact. When unexpected conditions arise, designs are adapted while continuity and standards alignment are preserved.</div>
+<section id="programs">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label">Technical Programs</div>
+      <h2>Selected work</h2>
+      <p class="section-sub">Representative programs spanning retrofit, new build, security integration, and infrastructure rationalization within large pharmaceutical, multi-campus environments.</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="num">01</div>
+        <h3>Multi-Campus Connectivity Retrofit</h3>
+        <p>Developed and deployed a proprietary DCIM and connectivity management platform (eTRACS) to support structured cabling upgrades across more than a hundred telecom rooms, linking CAD documentation with SQL databases for a consistent framework from design through invoicing.</p>
+      </div>
+      <div class="card">
+        <div class="num">02</div>
+        <h3>Data Centre Constructions</h3>
+        <p>Guided the physical layer and connectivity scope during the build of two large data centres, aligning backbone cabling, distribution systems, and testing with IT and facilities requirements across consultants, contractors, and stakeholders.</p>
+      </div>
+      <div class="card">
+        <div class="num">03</div>
+        <h3>Fiber Reroute &amp; Transition Design</h3>
+        <p>Directed the rerouting of legacy single-mode fiber through existing underground pathways into a new utility structure, designing the transition from armored OSP cabling to inside-plant terminations with contingency planning for MPO trunk replacement.</p>
+      </div>
+      <div class="card">
+        <div class="num">04</div>
+        <h3>Security Operations Centre Cabling</h3>
+        <p>Produced structured cabling designs for a new SOC, including copper distribution, optical fiber pathways, CCTV integration, intercoms, and wireless access point connectivity, applying ANSI/TIA and BICSI standards.</p>
+      </div>
+      <div class="card">
+        <div class="num">05</div>
+        <h3>Axis CCTV &amp; IP Security Integration</h3>
+        <p>Worked with Axis Communications equipment and security contractors to integrate IP-based CCTV, intercoms, and video telephones into structured cabling, designing PoE delivery for long-term maintainability.</p>
+      </div>
+      <div class="card">
+        <div class="num">06</div>
+        <h3>KVM Infrastructure Rationalization</h3>
+        <p>Reassessed a proposed high-cost KVM solution against existing interconnections and operational history, delivering a leaner, standards-compliant design that reduced overall cost.</p>
+      </div>
+      <div class="card">
+        <div class="num">07</div>
+        <h3>CCTV &amp; PoE Delivery Clarification</h3>
+        <p>Provided design clarification to security contractors on proper use of mid-span PoE injectors for surveillance equipment, keeping documentation aligned with structured cabling best practices.</p>
+      </div>
+      <div class="card">
+        <div class="num">08</div>
+        <h3>Vendor Oversight &amp; Infrastructure Auditing</h3>
+        <p>Managed vendor compliance with safety, health, and technical standards, and audited labor, material costs, and documentation deliverables to ensure quality and best-value results.</p>
       </div>
     </div>
-    <hr>
+  </div>
+</section>
 
-    <div class="q">
-      <div class="q-title">How does he fit alongside project managers and contractors?</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">He operates as a consultant, not a project manager or foreman. He does not direct crews or manage day-to-day site activity. Instead, he designs solutions that are standards-compliant, buildable, and maintainable, coordinates expectations with contractors and stakeholders, and verifies quality at closeout against design intent, testing results, and documentation. His role complements project management without replacing it.</div>
+<section id="deliverables" class="alt">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label">Frequent Deliverables</div>
+      <h2>What clients receive</h2>
+      <p class="section-sub">The objective is not volume but a record future technicians can trust and safely work from years later.</p>
+    </div>
+    <div class="del-grid">
+      <div class="del-card">
+        <h3>Administration &amp; Audit</h3>
+        <ul>
+          <li>Vendor safety and health-policy compliance review</li>
+          <li>Client regulation and protocol adherence</li>
+          <li>Downtime negotiation to minimize operational impact</li>
+          <li>Capacity planning and continuity/DR review support</li>
+          <li>Periodic labor and material audits for best value</li>
+        </ul>
+      </div>
+      <div class="del-card">
+        <h3>DCIM &amp; Proprietary Databases</h3>
+        <ul>
+          <li>Processes linking drawings and documentation to baseline DCIM</li>
+          <li>CAD-to-SQL records for a durable visual record</li>
+          <li>Copper and fiber CAD mastersets, maintained</li>
+          <li>Hub and telecom room documentation, elevations, pathways</li>
+          <li>SNMP visibility and grounding/pathway coordination</li>
+        </ul>
+      </div>
+      <div class="del-card">
+        <h3>Business Solutions &amp; Vendor Management</h3>
+        <ul>
+          <li>Closing documentation receipt and verification</li>
+          <li>Specifications, drawings, and scope/estimating</li>
+          <li>Change control, closeout checklists, deficiency lists</li>
+          <li>As-built and test result verification</li>
+          <li>Purchase orders, draws, and invoice tracking for cost control</li>
+        </ul>
       </div>
     </div>
-    <hr>
+  </div>
+</section>
 
-    <div class="q">
-      <div class="q-title">How does he reduce long-term risk?</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">He reduces long-term risk by enforcing standards, alignment, and documentation discipline. His work assumes Ethernet ubiquity, multi-trade overlap, rapid technology change, and documentation decay. By maintaining a durable record of what was actually built and verified, he protects organizations from operational risk, future outages, and loss of institutional knowledge due to turnover.</div>
-      </div>
+<section id="contact">
+  <div class="wrap contact-inner">
+    <div>
+      <div class="section-label">Contact</div>
+      <h2>Let's discuss your infrastructure program</h2>
+      <p>Based in Brampton, Ontario, Canada, engaged on physical layer and connectivity governance for large, multi-campus enterprises.</p>
     </div>
-    <hr>
+    <a class="btn btn-primary" href="mailto:support@lessunknown.com">support@lessunknown.com</a>
+  </div>
+</section>
 
-    <div class="q">
-      <div class="q-title">Does he understand how organizations actually operate?</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">Yes. His consulting practice reflects real organizational constraints: competing stakeholders, budget pressure, trade sequencing, and business continuity requirements. He negotiates downtime, aligns scope across disciplines, and issues deliverables that define outcomes without dictating methods, preserving contractor autonomy while keeping execution aligned with organizational realities.</div>
-      </div>
-    </div>
-    <hr>
-
-    <div class="q">
-      <div class="q-title">Is he credible to engineers and contractors?</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">He brings lifelong familiarity with data centres and telecommunications distribution facilities. He works fluently with industry standards such as ANSI/TIA and BICSI, and with tools including AutoCAD, MSSM, Linkware, AEM, and NetAlly certification platforms. This technical fluency allows him to identify issues early, translate requirements clearly, and maintain credibility across engineering and contracting teams.</div>
-      </div>
-    </div>
-    <hr>
-
-    <div class="q">
-      <div class="q-title">What does he leave behind when the work is done?</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">He leaves behind clarity. And if that is not possible in a retrofit project, then transparency. Typical deliverables include standards and constraints, drawings and markups, acceptance criteria, labeling conventions, test review requirements, closeout checklists, verification notes, and reconciled documentation. The objective is not volume but a record that future technicians can trust and safely work from years later.</div>
-      </div>
-    </div>
-    <hr>
-
-    <div class="q">
-      <div class="q-title">What experience demonstrates that this approach works?</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">His experience includes multi-campus connectivity retrofits supported by proprietary DCIM platforms, physical layer governance during large data centre builds, fiber reroute and transition designs, Security Operations Centre cabling programs, Axis CCTV and IP security integrations, KVM rationalization initiatives, and vendor compliance and infrastructure auditing. Across these projects, the common outcome is durable infrastructure and documented continuity.</div>
-      </div>
-    </div>
-    <hr>
-
-    <div class="q">
-      <div class="q-title">Why does he involve himself in DCIM and software architecture?</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">Because documentation only has value if it remains accurate over time. He contributes to DCIM and financial software architecture by capturing requirements, designing process frameworks, and guiding development teams so systems reflect how engineering, procurement, and operations actually function. His role bridges stakeholder intent with practical execution rather than programming.</div>
-      </div>
-    </div>
-  </section>
-
-  <section id="tech" class="section">
-    <div class="q">
-      <div class="q-title">Multi-Campus Connectivity Retrofit</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">Developed and deployed a proprietary DCIM and connectivity management platform (eTRACS) to support structured cabling upgrades across more than a hundred telecom rooms. The system linked CAD documentation with SQL databases, giving contractors a clear, consistent framework from design through invoicing.</div>
-      </div>
-    </div>
-    <hr>
-
-    <div class="q">
-      <div class="q-title">Data Centre Constructions</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">Guided the physical layer and connectivity scope during the build of 2 large data centres. Ensured backbone cabling, distribution systems, and testing were aligned with IT and facilities requirements. Coordinated with consultants, contractors, and stakeholders to integrate connectivity into overall project delivery.</div>
-      </div>
-    </div>
-    <hr>
-
-    <div class="q">
-      <div class="q-title">Fiber Reroute and Transition Design</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">Directed the rerouting of legacy single-mode fiber through existing underground pathways into a new utility structure. Designed the transition from armored OSP cabling to inside-plant tight-buffer terminations with LC connectors, while preparing contingency plans for MPO trunk replacement.</div>
-      </div>
-    </div>
-    <hr>
-
-    <div class="q">
-      <div class="q-title">Security Operations Centre Cabling Design</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">Produced structured cabling designs for a new Security Operations Centre (SOC), including copper distribution, optical fiber pathways, CCTV integration, intercoms, and wireless access point connectivity. Applied ANSI/TIA and BICSI standards and prepared alternate design options for optical fiber risers.</div>
-      </div>
-    </div>
-    <hr>
-
-    <div class="q">
-      <div class="q-title">Axis CCTV and IP Security Integration</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">Worked with Axis Communications equipment and security contractors to integrate IP-based CCTV cameras, intercoms, and video telephones into the structured cabling infrastructure. Designed Power over Ethernet delivery and ensured long-term maintainability of the security layer.</div>
-      </div>
-    </div>
-    <hr>
-
-    <div class="q">
-      <div class="q-title">KVM Infrastructure Rationalization</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">Reassessed a proposed high-cost KVM solution by analyzing existing interconnections and operational history. Delivered a leaner, standards-compliant design that aligned with technical requirements while reducing overall costs.</div>
-      </div>
-    </div>
-    <hr>
-
-    <div class="q">
-      <div class="q-title">CCTV and PoE Delivery Clarification</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">Provided design clarification to security contractors on proper use of mid-span PoE injectors for surveillance equipment. Ensured that system documentation matched structured cabling best practices and prevented design errors.</div>
-      </div>
-    </div>
-    <hr>
-
-    <div class="q">
-      <div class="q-title">Vendor Oversight and Infrastructure Auditing</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">Managed vendor compliance with safety, health, and technical standards. Conducted audits of labor, material costs, and documentation deliverables to ensure quality and best-value results.</div>
-      </div>
-    </div>
-  </section>
-
-  <section id="del" class="section">
-    <div class="q">
-      <div class="q-title">Administration and Audit of Communications Technology</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">Reviews vendor safety documents and health policies for compliance, manages adherence to client regulation and protocol, interfaces with stakeholders to support DCIM and physical layer programs, negotiates downtime to minimize operational impact, supports capacity planning, reviews continuity and disaster recovery procedures, provides technical guidance for quality and cost control, clarifies standards and expectations, and conducts periodic labor and material audits to ensure best value.</div>
-      </div>
-    </div>
-    <hr>
-
-    <div class="q">
-      <div class="q-title">DCIM and Proprietary Databases</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">Establishes processes linking drawings and documentation to baseline DCIM databases, compiles specifications for data centre and telecom room changes, links CAD to SQL records for a durable visual record, maintains copper and fiber CAD mastersets, resolves field-driven design changes, documents hub rooms and telecommunications rooms including elevations and pathways, maintains outside plant records, supports SNMP visibility for infrastructure devices, and coordinates grounding and pathway requirements across disciplines.</div>
-      </div>
-    </div>
-    <hr>
-
-    <div class="q">
-      <div class="q-title">Business Solutions and Vendor Management</div>
-      <div class="answer">
-        <img class="avatar" src="bogdan.png" alt="">
-        <div class="answer-text">Manages receipt and verification of closing documentation, owns telecom design portions of projects, issues specifications and drawings, analyzes additions and alterations to the corporate cabling plant, performs SQL surveys, defines scope and estimating, attends stakeholder meetings, coordinates troubleshooting across software and infrastructure, initiates change control and closeout check sheets, tracks delivery and issues summary reporting, evaluates change order pricing, conducts final inspections and deficiency lists, verifies as-built plans and test results, and documents purchase orders, progress draws, expenses, and invoices for cost control and accountability.</div>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<div id="sig" aria-label="Key statements">
-  <div class="line" id="sig1"></div>
-  <div class="line" id="sig2"></div>
-</div>
+<footer>
+  <div class="wrap footer-inner">
+    <div>INFOBUSINESS CORPORATION · 2003–2026</div>
+    <div><a href="mailto:support@lessunknown.com">support@lessunknown.com</a></div>
+  </div>
+</footer>
 
 <script>
 (function(){
-  // Current year
-  const yearEl = document.getElementById("year");
-  yearEl.textContent = String(new Date().getFullYear());
-
-  const bgImg = document.getElementById("bgImg");
-  const conversation = document.getElementById("conversation");
-  const returnBtn = document.getElementById("returnBtn");
-  const spray = document.getElementById("spray");
-  const sig = document.getElementById("sig");
-
-  // Preload images
-  ["bogdan.png","switch.png"].forEach(src => { const i = new Image(); i.src = src; });
-
-  // Sticky selector toggle
-  document.querySelectorAll(".selector button").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      document.querySelectorAll(".selector button").forEach(b=>b.classList.remove("active"));
-      document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
-      btn.classList.add("active");
-      document.getElementById(btn.dataset.target).classList.add("active");
+  var toggle = document.getElementById("navToggle");
+  var links = document.getElementById("navLinks");
+  toggle.addEventListener("click", function(){
+    var open = links.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  links.querySelectorAll("a").forEach(function(a){
+    a.addEventListener("click", function(){
+      links.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
     });
   });
-
-  // On hover: make a couple words yellow in the answer text
-  const blocks = document.querySelectorAll(".q");
-
-  function wrapRandomWords(el, count){
-    const text = el.textContent;
-    const words = text.split(/\s+/).filter(Boolean);
-    if(words.length < 8) return;
-
-    const picks = new Set();
-    const maxAttempts = 80;
-    let attempts = 0;
-
-    while(picks.size < count && attempts < maxAttempts){
-      const i = Math.floor(Math.random() * words.length);
-      if(words[i].length < 4) { attempts++; continue; }
-      picks.add(i);
-      attempts++;
-    }
-
-    const html = words.map((w, i)=>{
-      const safe = w.replace(/</g,"&lt;").replace(/>/g,"&gt;");
-      return picks.has(i) ? `<span class="hl">${safe}</span>` : safe;
-    }).join(" ");
-
-    el.dataset.raw = text;
-    el.innerHTML = html;
-  }
-
-  function restoreRaw(el){
-    if(el.dataset.raw){
-      el.textContent = el.dataset.raw;
-    }
-  }
-
-  blocks.forEach(b=>{
-    const t = b.querySelector(".answer-text");
-    if(!t) return;
-    b.addEventListener("mouseenter", ()=>{
-      restoreRaw(t);
-      wrapRandomWords(t, 2);
-    });
-    b.addEventListener("mouseleave", ()=>{
-      restoreRaw(t);
-    });
-  });
-
-  // Catch phrases pool (20), no repeat until exhausted, then reshuffle
-  const catchPhrasesBase = [
-    "Comfortable in chaos.",
-    "Effective with structure.",
-    "Governance without handholding.",
-    "Calm under constraint.",
-    "Standards first, always.",
-    "Retrofit reality fluent.",
-    "Design intent protected.",
-    "Documentation that survives turnover.",
-    "Clear constraints, clean outcomes.",
-    "Low ego, high accountability.",
-    "Independent, not isolated.",
-    "Buildable, maintainable, verifiable.",
-    "Consistency across campuses.",
-    "Friction removed, not ignored.",
-    "Quality verified, not assumed.",
-    "Outcomes over theatre.",
-    "Repeatable methods, durable results.",
-    "Practical governance, not noise.",
-    "Aligned across trades.",
-    "Tenacious until closeout."
-  ];
-
-  function shuffle(arr){
-    const a = arr.slice();
-    for(let i=a.length-1;i>0;i--){
-      const j = Math.floor(Math.random()*(i+1));
-      const t=a[i]; a[i]=a[j]; a[j]=t;
-    }
-    return a;
-  }
-
-  let bag = shuffle(catchPhrasesBase);
-  let idx = 0;
-
-  function nextPhrase(){
-    if(idx >= bag.length){
-      bag = shuffle(catchPhrasesBase);
-      idx = 0;
-    }
-    const p = bag[idx];
-    idx += 1;
-    return p;
-  }
-
-  // Bottom-right: cycle phrases (no 1s/0s)
-  const sig1 = document.getElementById("sig1");
-  const sig2 = document.getElementById("sig2");
-
-  let yellowOn = false;
-  setInterval(()=>{
-    yellowOn = !yellowOn;
-    sig.classList.toggle("yellow", yellowOn);
-  }, 10000);
-
-  async function wait(ms){ return new Promise(r=>setTimeout(r, ms)); }
-
-  async function phraseLoop(){
-    while(true){
-      sig1.textContent = nextPhrase();
-      sig2.textContent = nextPhrase();
-      await wait(5000);
-    }
-  }
-  phraseLoop();
-
-  // Right-side phrase spray (conversation mode only)
-  const sprayCount = 10;
-  const sprayItems = [];
-
-  function randomBetween(min, max){
-    return min + Math.random() * (max - min);
-  }
-
-  function placeSprayItem(el){
-    const top = randomBetween(60, window.innerHeight - 80);
-    const rightPad = randomBetween(10, 26);
-    el.style.top = top.toFixed(0) + "px";
-    el.style.right = rightPad.toFixed(0) + "px";
-  }
-
-  function initSpray(){
-    spray.innerHTML = "";
-    sprayItems.length = 0;
-    for(let i=0;i<sprayCount;i++){
-      const d = document.createElement("div");
-      d.className = "spray-item";
-      d.textContent = nextPhrase();
-      placeSprayItem(d);
-      spray.appendChild(d);
-      sprayItems.push(d);
-      setTimeout(()=> d.classList.add("on"), 80 + i * 120);
-    }
-  }
-
-  let sprayTimer = null;
-  let sprayYellowTimer = null;
-
-  function startSpray(){
-    initSpray();
-
-    if(sprayTimer) clearInterval(sprayTimer);
-    sprayTimer = setInterval(()=>{
-      if(!document.body.classList.contains("left-landing")) return;
-
-      const pick = sprayItems[Math.floor(Math.random() * sprayItems.length)];
-      pick.classList.remove("on");
-      pick.classList.remove("yellow");
-      setTimeout(()=>{
-        pick.textContent = nextPhrase();
-        placeSprayItem(pick);
-        pick.classList.add("on");
-      }, 350);
-    }, 1400);
-
-    if(sprayYellowTimer) clearInterval(sprayYellowTimer);
-    sprayYellowTimer = setInterval(()=>{
-      if(!document.body.classList.contains("left-landing")) return;
-      const pick = sprayItems[Math.floor(Math.random() * sprayItems.length)];
-      pick.classList.add("yellow");
-      setTimeout(()=> pick.classList.remove("yellow"), 1800);
-    }, 10000);
-  }
-
-  function stopSpray(){
-    if(sprayTimer) clearInterval(sprayTimer);
-    if(sprayYellowTimer) clearInterval(sprayYellowTimer);
-    sprayTimer = null;
-    sprayYellowTimer = null;
-    spray.innerHTML = "";
-  }
-
-  window.addEventListener("resize", ()=>{
-    if(document.body.classList.contains("left-landing")){
-      startSpray();
-    }
-  });
-
-  // Zoom state machine: zoom in, pause 10s, zoom out, pause 10s
-  const minS = 1.0;
-  const maxS = 1.3;
-  const zoomMs = 9000;
-  const pauseMs = 10000;
-
-  let zoomEnabled = true;
-  let phase = "zoomIn";
-  let phaseStart = performance.now();
-
-  function setScale(s){
-    bgImg.style.transform = "scale(" + s.toFixed(4) + ")";
-  }
-
-  function tick(now){
-    if(!zoomEnabled){
-      setScale(1.0);
-      requestAnimationFrame(tick);
-      return;
-    }
-
-    const t = now - phaseStart;
-
-    if(phase === "zoomIn"){
-      const p = Math.min(1, t / zoomMs);
-      setScale(minS + (maxS - minS) * p);
-      if(p >= 1){ phase = "holdMax"; phaseStart = now; }
-    } else if(phase === "holdMax"){
-      setScale(maxS);
-      if(t >= pauseMs){ phase = "zoomOut"; phaseStart = now; }
-    } else if(phase === "zoomOut"){
-      const p = Math.min(1, t / zoomMs);
-      setScale(maxS - (maxS - minS) * p);
-      if(p >= 1){ phase = "holdMin"; phaseStart = now; }
-    } else if(phase === "holdMin"){
-      setScale(minS);
-      if(t >= pauseMs){ phase = "zoomIn"; phaseStart = now; }
-    }
-
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-
-  // Leave landing on first scroll or click
-  let leftLanding = false;
-
-  function leaveLanding(){
-    if(leftLanding) return;
-    leftLanding = true;
-    document.body.classList.add("left-landing");
-
-    bgImg.src = "switch.png";
-    zoomEnabled = false;
-    setScale(1.0);
-
-    const convoTop = conversation.getBoundingClientRect().top + window.scrollY;
-    window.scrollTo({ top: convoTop, behavior: "instant" });
-
-    startSpray();
-  }
-
-  window.addEventListener("scroll", ()=>{
-    if(leftLanding) return;
-    if(window.scrollY > 10){
-      leaveLanding();
-    }
-  }, { passive:true });
-
-  document.getElementById("landing").addEventListener("click", ()=>{
-    leaveLanding();
-  });
-
-  // Return to landing
-  returnBtn.addEventListener("click", ()=>{
-    leftLanding = false;
-    document.body.classList.remove("left-landing");
-
-    stopSpray();
-
-    bgImg.src = "bogdan.png";
-    zoomEnabled = true;
-    phase = "zoomIn";
-    phaseStart = performance.now();
-
-    window.scrollTo({ top: 0, behavior: "instant" });
-  });
-
 })();
 </script>
 
